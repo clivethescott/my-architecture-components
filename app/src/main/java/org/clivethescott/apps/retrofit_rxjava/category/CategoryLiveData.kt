@@ -1,29 +1,23 @@
-package org.clivethescott.apps.retrofit_rxjava.architecture.livedata
+package org.clivethescott.apps.retrofit_rxjava.category
 
-import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.LiveData
 import android.util.Log
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
-import org.clivethescott.apps.retrofit_rxjava.Category
-import org.clivethescott.apps.retrofit_rxjava.MyApplication
-import org.clivethescott.apps.retrofit_rxjava.architecture.repository.CategoryRepository
-import org.clivethescott.apps.retrofit_rxjava.architecture.viewmodel.DisposableDataSource
-import javax.inject.Inject
+import org.clivethescott.apps.retrofit_rxjava.utils.DisposableDataSource
 
 /**
  * Created by scott on 30/07/2017.
  */
-class CategoriesLiveData : LiveData<List<Category>>(), DisposableDataSource {
+class CategoryLiveData(val categoriesRepository: CategoryRepository) :
+        LiveData<List<Category>>(), DisposableDataSource {
 
     private var categoriesDisposable: Disposable? = null
-    @Inject lateinit var categoriesRepository: CategoryRepository
 
     init {
 
-        MyApplication.injector.inject(this)
         fetchData()
     }
 
@@ -34,11 +28,10 @@ class CategoriesLiveData : LiveData<List<Category>>(), DisposableDataSource {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeBy(
 
-                        onSuccess = {
+                        onNext = {
                             Log.i(TAG, "Received data $it")
                             postValue(it)
                         },
-
                         onError = { err ->
 
                             Log.e(TAG, err.toString())
@@ -50,6 +43,7 @@ class CategoriesLiveData : LiveData<List<Category>>(), DisposableDataSource {
                 )
 
     }
+
 
     override fun dispose() {
         categoriesDisposable?.dispose()

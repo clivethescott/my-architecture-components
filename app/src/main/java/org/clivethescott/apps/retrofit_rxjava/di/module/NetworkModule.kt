@@ -6,8 +6,9 @@ import dagger.Provides
 import okhttp3.Credentials
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.clivethescott.apps.retrofit_rxjava.BasicAuthenticationInterceptor
+import org.clivethescott.apps.retrofit_rxjava.utils.BasicAuthenticationInterceptor
 import org.clivethescott.apps.retrofit_rxjava.BuildConfig
+import org.clivethescott.apps.retrofit_rxjava.category.CategoryApiService
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -19,6 +20,11 @@ import javax.inject.Singleton
  */
 @Module
 class NetworkModule {
+
+    @Provides @Singleton
+    fun provideCategoryService(retrofit: Retrofit): CategoryApiService {
+        return retrofit.create(CategoryApiService::class.java)
+    }
 
     @Provides @Singleton
     fun provideRetrofit(httpClient: OkHttpClient,
@@ -47,8 +53,8 @@ class NetworkModule {
     }
 
     @Provides @Singleton
-    fun provideGsonConverter() : Converter.Factory = GsonConverterFactory.create()
+    fun provideGsonConverter(): Converter.Factory = GsonConverterFactory.create()
 
     @Provides @Singleton
-    fun provideRxJavaCallAdapter() : CallAdapter.Factory = RxJava2CallAdapterFactory.create()
+    fun provideRxJavaCallAdapter(): CallAdapter.Factory = RxJava2CallAdapterFactory.create()
 }

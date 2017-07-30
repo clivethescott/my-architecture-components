@@ -1,19 +1,29 @@
-package org.clivethescott.apps.retrofit_rxjava.architecture.viewmodel
+package org.clivethescott.apps.retrofit_rxjava.category
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver
 import android.arch.lifecycle.OnLifecycleEvent
 import android.arch.lifecycle.ViewModel
 import android.util.Log
-import org.clivethescott.apps.retrofit_rxjava.architecture.livedata.CategoriesLiveData
+import org.clivethescott.apps.retrofit_rxjava.MyApplication
+import javax.inject.Inject
 
 
 /**
  * Created by scott on 30/07/2017.
  */
-class CategoriesViewModel : ViewModel(), LifecycleObserver {
+class CategoryViewModel : ViewModel(), LifecycleObserver {
 
-    val categories = CategoriesLiveData()
+    @Inject lateinit var categoriesRepository: CategoryRepository
+    val categories: CategoryLiveData
+
+    init {
+
+        MyApplication.injector.inject(this)
+
+        categories = CategoryLiveData(categoriesRepository)
+
+    }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     fun onStop() {

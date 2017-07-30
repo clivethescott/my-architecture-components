@@ -1,4 +1,4 @@
-package org.clivethescott.apps.retrofit_rxjava;
+package org.clivethescott.apps.retrofit_rxjava.utils;
 
 import okhttp3.Interceptor
 import okhttp3.Response

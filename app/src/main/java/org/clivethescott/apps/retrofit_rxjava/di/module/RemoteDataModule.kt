@@ -2,9 +2,10 @@ package org.clivethescott.apps.retrofit_rxjava.di.module
 
 import dagger.Module
 import dagger.Provides
-import org.clivethescott.apps.retrofit_rxjava.architecture.repository.CategoryRemoteRepositoryImpl
-import org.clivethescott.apps.retrofit_rxjava.architecture.repository.CategoryRepository
-import retrofit2.Retrofit
+import org.clivethescott.apps.retrofit_rxjava.category.CategoryApiService
+import org.clivethescott.apps.retrofit_rxjava.category.CategoryDAO
+import org.clivethescott.apps.retrofit_rxjava.category.CategoryRepositoryImpl
+import org.clivethescott.apps.retrofit_rxjava.category.CategoryRepository
 import javax.inject.Singleton
 
 /**
@@ -14,8 +15,9 @@ import javax.inject.Singleton
 class RemoteDataModule {
 
     @Singleton @Provides
-    fun provideCategoryRepository(retrofit: Retrofit): CategoryRepository {
+    fun provideCategoryRepository(categoryApiService: CategoryApiService,
+                                  categoryDAO: CategoryDAO): CategoryRepository {
 
-        return CategoryRemoteRepositoryImpl(retrofit)
+        return CategoryRepositoryImpl(categoryApiService, categoryDAO)
     }
 }

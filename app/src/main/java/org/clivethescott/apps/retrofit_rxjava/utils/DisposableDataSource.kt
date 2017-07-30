@@ -1,4 +1,4 @@
-package org.clivethescott.apps.retrofit_rxjava.architecture.viewmodel
+package org.clivethescott.apps.retrofit_rxjava.utils
 
 /**
  * Created by scott on 30/07/2017.

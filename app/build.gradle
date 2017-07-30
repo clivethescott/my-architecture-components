@@ -13,10 +13,18 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation":
+                                     "$projectDir/schemas".toString()]
+            }
+        }
     }
     buildTypes {
         debug {
             buildConfigField "String", "SERVER_URL", "\"https://hitrac.co.zw/hwo-portal/\""
+            buildConfigField "String", "DB_NAME", "\"my-dope-db\""
         }
         release {
             minifyEnabled false
@@ -75,9 +83,11 @@ dependencies {
     compile "android.arch.lifecycle:runtime:$architectureComponentsVersion"
     compile "android.arch.lifecycle:extensions:$architectureComponentsVersion"
     kapt "android.arch.lifecycle:compiler:$architectureComponentsVersion"
-
-    // RxJava <----> LiveData
-    compile "android.arch.lifecycle:reactivestreams:$architectureComponentsVersion"
+    // Room
+    compile "android.arch.persistence.room:runtime:$architectureComponentsVersion"
+    kapt "android.arch.persistence.room:compiler:$architectureComponentsVersion"
+    // Room RxJava
+    compile "android.arch.persistence.room:rxjava2:$architectureComponentsVersion"
 
     testCompile 'junit:junit:4.12'
 }

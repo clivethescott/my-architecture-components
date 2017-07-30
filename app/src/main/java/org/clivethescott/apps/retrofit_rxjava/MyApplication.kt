@@ -3,6 +3,7 @@ package org.clivethescott.apps.retrofit_rxjava
 import android.app.Application
 import org.clivethescott.apps.retrofit_rxjava.di.component.AppComponent
 import org.clivethescott.apps.retrofit_rxjava.di.component.DaggerAppComponent
+import org.clivethescott.apps.retrofit_rxjava.di.module.AppModule
 
 /**
  * Created by scott on 30/07/2017.
@@ -17,6 +18,8 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        injector = DaggerAppComponent.builder().build()
+        injector = DaggerAppComponent.builder()
+                .appModule(AppModule(this))
+                .build()
     }
 }

@@ -5,21 +5,22 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.util.Log
-import org.clivethescott.apps.retrofit_rxjava.architecture.viewmodel.CategoriesViewModel
+import org.clivethescott.apps.retrofit_rxjava.category.Category
+import org.clivethescott.apps.retrofit_rxjava.category.CategoryViewModel
 
 
 class MainActivity : LifecycleActivity() {
 
-    lateinit var categoriesViewModel: CategoriesViewModel
+    lateinit var categoryViewModel: CategoryViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        categoriesViewModel = ViewModelProviders.of(this).get(CategoriesViewModel::class.java)
-        lifecycle.addObserver(categoriesViewModel)
+        categoryViewModel = ViewModelProviders.of(this).get(CategoryViewModel::class.java)
+        lifecycle.addObserver(categoryViewModel)
 
-        categoriesViewModel.categories.observe(this, Observer<List<Category>> { categories ->
+        categoryViewModel.categories.observe(this, Observer<List<Category>> { categories ->
 
             categories?.let {
 
@@ -31,7 +32,7 @@ class MainActivity : LifecycleActivity() {
 
     override fun onStop() {
         super.onStop()
-        lifecycle.removeObserver(categoriesViewModel)
+        lifecycle.removeObserver(categoryViewModel)
 
     }
 
